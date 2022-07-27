@@ -1,0 +1,21 @@
+function main(workbook: ExcelScript.Workbook) {
+  let wsTerv = workbook.getWorksheet('TERV_backup');
+
+    // get lastRow of ProdPlan worksheet
+    let lastRow = wsTerv.getRange("B2").getExtendedRange(ExcelScript.KeyboardDirection.down).getRowCount()+1;
+    console.log(lastRow);
+
+    // get lastRow of new workorders worksheet
+    let copyFromWs = workbook.getWorksheet("Ide masold");
+    let lastRow2 = copyFromWs.getUsedRange().getRowCount();
+    console.log(lastRow2);
+   
+   // copy all relevant cells from one sheet to another
+   wsTerv.getCell(lastRow,1).copyFrom(copyFromWs.getRangeByIndexes(1,2,lastRow2,2),ExcelScript.RangeCopyType.values,false,false)
+   
+   wsTerv.getCell(lastRow,3).copyFrom(copyFromWs.getRangeByIndexes(1,5,lastRow2,1),ExcelScript.RangeCopyType.values,false,false)
+   
+   wsTerv.getCell(lastRow,7).copyFrom(copyFromWs.getRangeByIndexes(1,7,lastRow2,1,ExcelScript.RangeCopyType.values,false,false))
+
+   wsTerv.getCell(lastRow, 10).copyFrom(copyFromWs.getRangeByIndexes(1, 11, lastRow2, 1, ExcelScript.RangeCopyType.values, false, false))
+}
